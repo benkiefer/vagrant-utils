@@ -13,7 +13,7 @@ class ntp {
 	service { "ntp" :
 		ensure => running,
 		enable => true,
-		subscripe => File["/etc/ntp.conf"],
+		subscribe => File["/etc/ntp.conf"],
 		require => Package["ntp"],
 	}
 }
