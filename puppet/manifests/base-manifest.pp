@@ -21,6 +21,9 @@
 
 	
 	# start up activemq
-	class { "activemq":
-		port => "61616"
+#	class { "activemq":
+#		port => "61616"
+#	}
+
+	class { "tomcat7":
 	}
