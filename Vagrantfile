@@ -6,9 +6,10 @@ Vagrant::Config.run do |config|
 		puppet.manifests_path = "puppet/manifests"
 		puppet.module_path = "puppet/modules"
 		puppet.manifest_file = "base-manifest.pp"
-		# puppet.options = "--verbose --debug"
+		puppet.options = "--verbose --debug"
 	end
   
 	config.vm.forward_port 61616, 61616
+	config.vm.forward_port 8161, 8161
   
 end
