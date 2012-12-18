@@ -19,13 +19,13 @@
 	# force all package executions to happen after the apt-get update
 	Exec["apt-get-update"] -> Package <| |>
 	
-#	class { "activemq":
-#		port => "61616",
-#		adminPort => "8161",
-#	}
-
-	timezone { "timezone":
-		zone => "CST6CDT",
+	class { "activemq":
+		port => "61616",
+		adminPort => "8161",
 	}
+
+#	timezone { "timezone":
+#		zone => "CST6CDT",
+#	}
 	
-	class {"ntp":}
+#	class {"ntp":}
