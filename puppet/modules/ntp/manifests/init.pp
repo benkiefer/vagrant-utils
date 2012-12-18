@@ -1,19 +1,40 @@
-# A module for syncing the time on the vm using ntp
+class ntp (
+	$version = "present",
+	$ntpservers = ["1.pool.ntp.org", "2.pool.ntp.org"],
+	$enable = true,
+	$start = true
+) {
+	class{'ntp::install': } ->
+	class{'ntp::config': } ~>
+	class{'ntp::service': } ->
+	Class["ntp"]
+}
 
-class ntp {
-	package { "ntp" :
-		ensure => present,
+class ntp::install {
+	package{'ntpd':
+		ensure => $ntp::version
 	}
-	
-	file { "/etc/ntp.conf" :
-		content => template("ntp/ntp.conf.erb"),
-		require => Package["ntp"],
+}
+ 
+class ntp::config {
+	$ntpservers = $ntp::ntpservers
+ 
+	File {
+		owner   => root,
+		group   => root,
+		mode    => 644,
 	}
-	
-	service { "ntp" :
-		ensure => running,
-		enable => true,
-		subscribe => File["/etc/ntp.conf"],
-		require => Package["ntp"],
+ 
+	file{'/etc/ntp.conf':
+         content => template('ntp/ntp.conf.erb');
+	}
+}
+ 
+class ntp::service {
+	$ensure = $ntp::start ? {true => running, default => stopped}
+ 
+	service{"ntp":
+		ensure  => $ensure,
+		enable  => $ntp::enable,
 	}
 }

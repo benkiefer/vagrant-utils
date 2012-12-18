@@ -18,14 +18,14 @@
 
 	# force all package executions to happen after the apt-get update
 	Exec["apt-get-update"] -> Package <| |>
-
 	
-	# start up activemq
-	class { "activemq":
-		port => "61616",
-		adminPort => "8161",
-	}
-
-#	class { "tomcat7":
-#		
+#	class { "activemq":
+#		port => "61616",
+#		adminPort => "8161",
 #	}
+
+	timezone { "timezone":
+		zone => "CST6CDT",
+	}
+	
+	class {"ntp":}
